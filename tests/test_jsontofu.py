@@ -11,6 +11,13 @@ class Data:
     test_str: str
     test_int: int
 
+
+@dataclass
+class OptionalData:
+    test_str: Optional[str]
+    test_int: Optional[int]
+
+
 @dataclass
 class ListData:
     test_str: str
@@ -98,3 +105,41 @@ def test_type_check_int():
         assert True
     else:
         assert False
+
+def test_type_check_non_optional():
+    try:
+        jsontofu.decode('''{"test_str": null, "test_int": null}''', Data)
+    except:
+        assert True
+    else:
+        assert False
+
+def test_type_check_optional():
+    try:
+        jsontofu.decode('''{"test_str": null, "test_int": null}''', OptionalData)
+    except:
+        assert False
+    else:
+        assert True
+
+#def test_type_check_optional_str_int():
+#    try:
+#        jsontofu.decode('''{"test_str": "", "test_int": 0}''', OptionalData)
+#    except:
+#        assert False
+#    else:
+#        assert True
+#
+#    try:
+#        jsontofu.decode('''{"test_str": 0, "test_int": 0}''', OptionalData)
+#    except:
+#        assert True
+#    else:
+#        assert False
+#
+#    try:
+#        jsontofu.decode('''{"test_str": "", "test_int": ""}''', OptionalData)
+#    except:
+#        assert True
+#    else:
+#        assert False
